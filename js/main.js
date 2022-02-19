@@ -1,22 +1,22 @@
-function getNumber(firstNumber, secondNumber) {
-  firstNumber = Math.ceil(firstNumber);
-  secondNumber = Math.floor(secondNumber);
-  if (firstNumber < 0) {
+function getRandomInteger(firstNumber, secondNumber) {
+  const min = Math.ceil(firstNumber);
+  const max = Math.floor(secondNumber);
+  if (min < 0) {
     return false;
   }
-  if (secondNumber > firstNumber) {
-    return Math.floor(Math.random() * (secondNumber - firstNumber + 1)) + firstNumber;
+  if (max > min) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   return false;
 }
 
-getNumber();
+getRandomInteger(1, 99);
 
-function lineLenght(currentLine, maxLine) {
-  if (currentLine.length > maxLine) {
+function checkStringMaxLength(currentString, maxString) {
+  if (currentString.length > maxString) {
     return false;
   }
   return true;
 }
 
-lineLenght();
+checkStringMaxLength('Тест', 5);
