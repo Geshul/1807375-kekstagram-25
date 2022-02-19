@@ -12,6 +12,8 @@ function getNumber(firstNumber, secondNumber) {
   return;
 };
 
+getNumber();
+
 function lineLenght(currentLine, maxLine) {
   if (currentLine.length > maxLine) {
     console.log('Ошибка');
@@ -20,3 +22,5 @@ function lineLenght(currentLine, maxLine) {
   console.log('Длина строки не превышена');
   return true;
 };
+
+lineLenght();
