@@ -1,5 +1,5 @@
-import {getRandomInteger, getRandomId} from './utill.js';
-import {DESCRIPTIONS, MESSAGES, NAMES} from './data.js';
+import { getRandomInteger, getRandomId } from './utils.js';
+import { DESCRIPTIONS, MESSAGES, NAMES } from './data.js';
 
 function createComments(commentsLength) {
   const comments = [];
@@ -32,6 +32,4 @@ function createPosts() {
   return posts;
 }
 
-createPosts();
-
-export {createPosts};
+export { createPosts };

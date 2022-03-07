@@ -1,5 +1,3 @@
-import {randomIds} from './data.js';
-
 function getRandomInteger(firstNumber, secondNumber) {
   const min = Math.ceil(firstNumber);
   const max = Math.floor(secondNumber);
@@ -12,8 +10,6 @@ function getRandomInteger(firstNumber, secondNumber) {
   return false;
 }
 
-getRandomInteger(1, 99);
-
 function checkStringMaxLength(currentString, maxLength) {
   if (currentString.length > maxLength) {
     return false;
@@ -21,7 +17,7 @@ function checkStringMaxLength(currentString, maxLength) {
   return true;
 }
 
-checkStringMaxLength('Тест', 5);
+const randomIds = [];
 
 function getRandomId() {
   let element = getRandomInteger(1,1000);
@@ -32,4 +28,4 @@ function getRandomId() {
   return element;
 }
 
-export {getRandomInteger, checkStringMaxLength, getRandomId};
+export { getRandomInteger, checkStringMaxLength, getRandomId };

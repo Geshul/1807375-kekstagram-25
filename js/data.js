@@ -12,6 +12,4 @@ const MESSAGES = [
 
 const NAMES = ['Борян', 'Стас', 'Линч', 'Дэвид', 'Клод', 'Валерий', 'Виталямбус'];
 
-const randomIds = [];
-
-export {DESCRIPTIONS, MESSAGES, NAMES, randomIds};
+export { DESCRIPTIONS, MESSAGES, NAMES };
