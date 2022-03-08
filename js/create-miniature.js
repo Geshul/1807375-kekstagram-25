@@ -1,9 +1,12 @@
 import { createPosts } from './create-posts.js';
+
 const list = document.querySelector('.pictures');
+
 const templatePost = document.querySelector('#picture')
   .content;
 
 const posts = createPosts();
+
 const miniatures = document.createDocumentFragment();
 
 posts.forEach(({url, likes, comments}) => {
