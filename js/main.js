@@ -1,3 +1,5 @@
 import { createPosts } from './create-posts.js';
+import { createMiniatures } from './create-miniatures.js';
 
-createPosts();
+const posts = createPosts();
+createMiniatures(posts);
