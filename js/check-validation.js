@@ -15,26 +15,17 @@ function validateHashtags(value) {
   hashTags = hashTags.map((element) => element.toLowerCase());
   const checkedHashTags = [];
   const regularExpression = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
-  if (hashTags.length > 5 ){
+  if (hashTags.length > 5) {
     return false;
   }
   for (let i = 0; i < hashTags.length; i++) {
-    if (!hashTags[i].startsWith('#') && value !== ''){
+    if ((!hashTags[i].startsWith('#') && value !== '') || (hashTags[i].length <= 1 && value !== '') || hashTags[i].length > 20 || (!hashTags[i].match(regularExpression) && value !== '')) {
       return false;
     }
-    if (hashTags[i].length <= 1 && value !== '')  {
-      return false;
-    }
-    if(checkedHashTags.includes(hashTags[i])){
+    if (checkedHashTags.includes(hashTags[i])) {
       return false;
     } else {
       checkedHashTags.push(hashTags[i]);
-    }
-    if (hashTags[i].length > 20 ) {
-      return false;
-    }
-    if (!hashTags[i].match(regularExpression) && value !== '') {
-      return false;
     }
   }
   return true;
@@ -44,58 +35,57 @@ function validateComment(value) {
   return value.length <= 140;
 }
 
-pristine.addValidator (
-  editForm.querySelector('.text__hashtags'),
-  validateHashtags,
-  'Что-то пошло не так'
-);
+function closeForm() {
+  overlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  editForm.reset();
+  pristine.reset();
+}
 
-pristine.addValidator (
-  editForm.querySelector('.text__description'),
-  validateComment,
-  'Длина комментария не может составлять больше 140 символов'
-);
-
-function openForm() {
-  const preview = document.querySelector('.img-upload__preview img');
-  overlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  preview.src = upload.value;
-  document.querySelector('.img-upload__cancel').addEventListener('click', () =>{
-    overlay.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    editForm.reset();
-    pristine.reset();
-  });
-  document.addEventListener('keydown', (evt) =>{
-    if(evt.key === 'Escape') {
-      overlay.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      editForm.reset();
-      pristine.reset();
+function initFormOpenClose() {
+  upload.addEventListener('change', openForm);
+  document.querySelector('.img-upload__cancel').addEventListener('click', closeForm);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closeForm();
     }
   });
-  document.querySelector('.img-upload__text input').addEventListener('keydown', (evt) =>{
-    if(evt.key === 'Escape') {
+  document.querySelector('.img-upload__text input').addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
       evt.stopPropagation();
     }
   });
-  document.querySelector('.img-upload__text textarea').addEventListener('keydown', (evt) =>{
-    if(evt.key === 'Escape') {
+  document.querySelector('.img-upload__text textarea').addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
       evt.stopPropagation();
     }
   });
 }
 
-function checkValidation()
-{
-  upload.addEventListener('change', openForm);
+function openForm() {
+  overlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+}
+
+function initFormValidation() {
+  pristine.addValidator(
+    editForm.querySelector('.text__hashtags'),
+    validateHashtags,
+    'Что-то пошло не так'
+  );
+
+  pristine.addValidator(
+    editForm.querySelector('.text__description'),
+    validateComment,
+    'Длина комментария не может составлять больше 140 символов'
+  );
+
   editForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    if(pristine.validate()) {
+    if (pristine.validate()) {
       editForm.submit();
     }
   });
 }
 
-export { checkValidation };
+export { initFormValidation,initFormOpenClose };
