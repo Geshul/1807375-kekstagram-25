@@ -1,11 +1,7 @@
 const screen = document.querySelector('.big-picture');
-const fullPhoto = screen.querySelector('.big-picture__img img');
-const likesCount = screen.querySelector('.likes-count');
-const commentsCount = screen.querySelector('.comments-count');
-const commentTemplate = document.querySelector('#social-comment').content;
-const closeBigPicture = document.querySelector('.big-picture__cancel');
 
 function fillComments (comments) {
+  const commentTemplate = document.querySelector('#social-comment').content;
   const commentsList = screen.querySelector('.social__comments');
   commentsList.innerHTML = '';
   comments.forEach((commentData) => {
@@ -19,6 +15,10 @@ function fillComments (comments) {
 }
 
 function fillBigPicture (post) {
+  const fullPhoto = screen.querySelector('.big-picture__img img');
+  const likesCount = screen.querySelector('.likes-count');
+  const commentsCount = screen.querySelector('.comments-count');
+  const closeBigPicture = document.querySelector('.big-picture__cancel');
   fullPhoto.src = post.url;
   likesCount.textContent = post.likes;
   commentsCount.textContent = post.comments.length;
