@@ -20,7 +20,7 @@ function createPost(postId) {
     url: `photos/${postId}.jpg`,
     description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length-1)],
     likes: getRandomInteger(15, 255),
-    comments: createComments(2)
+    comments: createComments(getRandomInteger(1, 30))
   };
 }
 
