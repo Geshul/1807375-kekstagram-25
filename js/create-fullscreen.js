@@ -1,10 +1,14 @@
 const screen = document.querySelector('.big-picture');
+let postComments = [];
+let lastFilledComment = 0;
+const commentsLoader = document.querySelector('.social__comments-loader');
+const commentsList = screen.querySelector('.social__comments');
 
-function fillComments (comments) {
+function fillComments () {
   const commentTemplate = document.querySelector('#social-comment').content;
-  const commentsList = screen.querySelector('.social__comments');
-  commentsList.innerHTML = '';
-  comments.forEach((commentData) => {
+  const slicedComments = postComments.slice(lastFilledComment,lastFilledComment+5);
+  const filledComments = document.querySelector('.comments-filled');
+  slicedComments.forEach((commentData) => {
     const comment = commentTemplate.cloneNode(true);
     const commentImg = comment.querySelector('img');
     commentImg.src = commentData.avatar;
@@ -12,17 +16,30 @@ function fillComments (comments) {
     comment.querySelector('.social__text').textContent = commentData.message;
     commentsList.append(comment);
   });
+  lastFilledComment += slicedComments.length;
+  if (lastFilledComment >= postComments.length) {
+    commentsLoader.classList.add('hidden');
+  }
+  filledComments.textContent = lastFilledComment;
+}
+
+function resetBigPicture() {
+  commentsLoader.classList.remove('hidden');
+  lastFilledComment = 0;
 }
 
 function fillBigPicture (post) {
+  resetBigPicture();
   const fullPhoto = screen.querySelector('.big-picture__img img');
   const likesCount = screen.querySelector('.likes-count');
   const commentsCount = screen.querySelector('.comments-count');
   const closeBigPicture = document.querySelector('.big-picture__cancel');
   fullPhoto.src = post.url;
   likesCount.textContent = post.likes;
+  postComments = post.comments;
   commentsCount.textContent = post.comments.length;
-  fillComments(post.comments);
+  commentsList.innerHTML = '';
+  fillComments();
   screen.classList.remove('hidden');
   closeBigPicture.addEventListener('click', () =>{
     screen.classList.add('hidden');
@@ -34,6 +51,7 @@ function fillBigPicture (post) {
       document.body.classList.remove('modal-open');
     }
   });
+  commentsLoader.addEventListener('click', fillComments);
 }
 
 function createFullscreen(posts) {
@@ -42,8 +60,6 @@ function createFullscreen(posts) {
     photo[i].addEventListener('click', (evt) => {
       const postId = evt.target.closest('.picture').dataset.postId;
       fillBigPicture(posts[postId]);
-      screen.querySelector('.social__comment-count').classList.add('hidden');
-      screen.querySelector('.comments-loader').classList.add('hidden');
       document.body.classList.add('modal-open');
     });
   }

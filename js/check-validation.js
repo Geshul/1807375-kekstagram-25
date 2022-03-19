@@ -19,7 +19,10 @@ function validateHashtags(value) {
     return false;
   }
   for (let i = 0; i < hashTags.length; i++) {
-    if ((!hashTags[i].startsWith('#') && value !== '') || (hashTags[i].length <= 1 && value !== '') || hashTags[i].length > 20 || (!hashTags[i].match(regularExpression) && value !== '')) {
+    if ((!hashTags[i].startsWith('#') && value !== '') ||
+    (hashTags[i].length <= 1 && value !== '') ||
+    hashTags[i].length > 20 ||
+    (!hashTags[i].match(regularExpression) && value !== '')) {
       return false;
     }
     if (checkedHashTags.includes(hashTags[i])) {
