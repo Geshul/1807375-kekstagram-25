@@ -1,3 +1,4 @@
+import { clearEffect } from './form-sliders.js';
 const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
@@ -43,6 +44,8 @@ function closeForm() {
   document.body.classList.remove('modal-open');
   editForm.reset();
   pristine.reset();
+  document.getElementById('effect-none').checked = true;
+  clearEffect();
 }
 
 function initFormOpenClose() {
