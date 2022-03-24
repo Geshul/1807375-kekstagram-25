@@ -4,6 +4,8 @@ const SCALE_STEP = 25;
 const imagePreview = document.querySelector('.img-upload__preview');
 const innerImage = imagePreview.querySelector('img');
 const sliderWrapper = document.querySelector('.img-upload__effect-level');
+let currentEffect = 'none';
+const valueElement = document.querySelector('.effect-level__value');
 const effectSign = {
   none: '',
   chrome: '',
@@ -79,19 +81,19 @@ function initRangeSlider() {
     step: 0.1
   });
 
-  listEffects.addEventListener('change', (evt) =>{
-    const valueElement = document.querySelector('.effect-level__value');
-    const currentEffect = evt.target.value;
+  sliderElement.noUiSlider.on('update', () => {
+    valueElement.value = sliderElement.noUiSlider.get();
+    innerImage.style.filter = `${effectStyle[currentEffect]}(${valueElement.value}${effectSign[currentEffect]})`;
+  });
 
+  listEffects.addEventListener('change', (evt) =>{
+    currentEffect = evt.target.value;
+    innerImage.className = `effects__preview--${currentEffect}`;
     sliderElement.noUiSlider.updateOptions(sliderEffectOption[currentEffect]);
-    sliderElement.noUiSlider.on('update', () => {
-      valueElement.value = sliderElement.noUiSlider.get();
-      innerImage.style.filter = `${effectStyle[evt.target.value]}(${valueElement.value}${effectSign[evt.target.value]})`;
-      innerImage.className = `effects__preview--${currentEffect}`;
-      sliderWrapper.classList.remove('visually-hidden');
-    });
     if(currentEffect === 'none') {
       clearEffect();
+    } else {
+      sliderWrapper.classList.remove('visually-hidden');
     }
   });
 }
