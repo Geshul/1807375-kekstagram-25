@@ -14,7 +14,7 @@ const EFFECT_SIGN = {
   phobos: 'px',
   heat: ''
 };
-const effectStyle = {
+const EFFECT_STYLE = {
   none: '',
   chrome: 'grayscale',
   sepia: 'sepia',
@@ -22,7 +22,7 @@ const effectStyle = {
   phobos: 'blur',
   heat: 'brightness'
 };
-const sliderEffectOption = {
+const SLIDER_EFFECT_OPTIONS = {
   none: {},
 
   chrome: {
@@ -92,13 +92,13 @@ function initRangeSlider() {
 
   sliderElement.noUiSlider.on('update', () => {
     valueElement.value = sliderElement.noUiSlider.get();
-    innerImage.style.filter = `${effectStyle[currentEffect]}(${valueElement.value}${EFFECT_SIGN[currentEffect]})`;
+    innerImage.style.filter = `${EFFECT_STYLE[currentEffect]}(${valueElement.value}${EFFECT_SIGN[currentEffect]})`;
   });
 
   listEffects.addEventListener('change', (evt) => {
     currentEffect = evt.target.value;
     innerImage.className = `effects effects__preview--${currentEffect}`;
-    sliderElement.noUiSlider.updateOptions(sliderEffectOption[currentEffect]);
+    sliderElement.noUiSlider.updateOptions(SLIDER_EFFECT_OPTIONS[currentEffect]);
     if (currentEffect === 'none') {
       clearEffect();
     } else {
