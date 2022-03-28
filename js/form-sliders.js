@@ -126,4 +126,4 @@ function changeControl() {
   });
 }
 
-export { changeControl, initRangeSlider, clearEffect };
+export { changeControl, initRangeSlider, clearEffect, imagePreview };

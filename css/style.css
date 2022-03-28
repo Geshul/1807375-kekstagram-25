@@ -1420,3 +1420,9 @@ main {
 .active {
   display: block;
 }
+
+.img-upload__error {
+  display: block;
+  font-size: 0.85em;
+  color: #c00;
+}

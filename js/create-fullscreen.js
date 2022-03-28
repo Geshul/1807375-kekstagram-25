@@ -33,9 +33,11 @@ function fillBigPicture (post) {
   const fullPhoto = screen.querySelector('.big-picture__img img');
   const likesCount = screen.querySelector('.likes-count');
   const commentsCount = screen.querySelector('.comments-count');
+  const decription = screen.querySelector('.social__caption');
   const closeBigPicture = document.querySelector('.big-picture__cancel');
   fullPhoto.src = post.url;
   likesCount.textContent = post.likes;
+  decription.textContent = post.description;
   postComments = post.comments;
   commentsCount.textContent = post.comments.length;
   commentsList.innerHTML = '';

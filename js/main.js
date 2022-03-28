@@ -1,13 +1,16 @@
-import { createPosts } from './create-posts.js';
 import { createMiniatures } from './create-miniatures.js';
 import { createFullscreen } from './create-fullscreen.js';
-import { initFormValidation,initFormOpenClose } from './check-validation.js';
+import { initFormValidation, initFormOpenClose, initFormSubmit, closeForm } from './check-validation.js';
 import { changeControl, initRangeSlider } from './form-sliders.js';
+import { getData } from './api.js';
 
-const posts = createPosts();
-createMiniatures(posts);
-createFullscreen(posts);
+getData((posts) => {
+  createMiniatures(posts);
+  createFullscreen(posts);
+});
+
 initFormValidation();
 initFormOpenClose();
+initFormSubmit(closeForm);
 changeControl();
 initRangeSlider();
