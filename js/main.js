@@ -10,7 +10,11 @@ getData((posts) => {
 });
 
 initFormValidation();
+
 initFormOpenClose();
+
 initFormSubmit(closeForm);
+
 changeControl();
+
 initRangeSlider();

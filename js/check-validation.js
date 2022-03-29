@@ -5,14 +5,17 @@ const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
 const submitButton = editForm.querySelector('.img-upload__submit');
+
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Загрузка...';
 };
+
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
+
 const pristine = new Pristine(editForm, {
   classTo: 'img-upload__item',
   errorClass: 'img-upload__item--invalid',
@@ -56,7 +59,9 @@ function closeForm() {
   editForm.reset();
   pristine.reset();
   document.getElementById('effect-none').checked = true;
+
   clearEffect();
+
   imagePreview.style.transform = '';
 }
 
@@ -126,15 +131,20 @@ const initFormSubmit = (onSuccess) =>  {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
+
       sendData(
         () => {
           onSuccess();
+
           unblockSubmitButton();
+
           showPopupMessage('success');
         },
         () => {
           unblockSubmitButton();
+
           showPopupMessage('error');
+
           closeForm();
         },
         new FormData(evt.target),

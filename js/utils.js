@@ -1,6 +1,7 @@
 function getRandomInteger(firstNumber, secondNumber) {
   const min = Math.ceil(firstNumber);
   const max = Math.floor(secondNumber);
+
   if (min < 0) {
     return false;
   }
@@ -18,7 +19,6 @@ function checkStringMaxLength(currentString, maxLength) {
 }
 
 const randomIds = [];
-
 const ALERT_SHOW_TIME = 5000;
 
 function getRandomId() {
@@ -31,21 +31,11 @@ function getRandomId() {
 }
 
 const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.bottom = 10;
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'yellow';
-  alertContainer.style.color = 'black';
+  const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert__container').cloneNode(true);
 
   alertContainer.textContent = message;
 
-  document.body.append(alertContainer);
+  document.body.appendChild(alertContainer);
 
   setTimeout(() => {
     alertContainer.remove();

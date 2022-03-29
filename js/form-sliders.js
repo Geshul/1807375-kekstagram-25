@@ -110,6 +110,7 @@ function initRangeSlider() {
 function changeControl() {
   uploadScale.querySelector('.scale__control--smaller').addEventListener('click', ()=> {
     let currentValue = parseInt(uploadValue.value, 10);
+
     if (currentValue > 25 && currentValue <= 100) {
       currentValue -= SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
@@ -118,6 +119,7 @@ function changeControl() {
   });
   uploadScale.querySelector('.scale__control--bigger').addEventListener('click', ()=> {
     let currentValue = parseInt(uploadValue.value, 10);
+
     if (currentValue >= 25 && currentValue < 100) {
       currentValue += SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
