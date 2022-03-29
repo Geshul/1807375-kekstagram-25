@@ -3,6 +3,7 @@ import { DESCRIPTIONS, MESSAGES, NAMES } from './data.js';
 
 function createComments(commentsLength) {
   const comments = [];
+
   for (let i = 0; i < commentsLength;i++) {
     comments.push({
       id: getRandomId(),
@@ -26,6 +27,7 @@ function createPost(postId) {
 
 function createPosts() {
   const posts = [];
+
   for (let i = 1; i <= 25; i++) {
     posts.push(createPost(i));
   }

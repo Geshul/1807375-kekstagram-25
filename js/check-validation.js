@@ -1,7 +1,21 @@
-import { clearEffect } from './form-sliders.js';
+import { clearEffect, imagePreview } from './form-sliders.js';
+import { sendData } from './api.js';
+
 const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
+const submitButton = editForm.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Загрузка...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
 const pristine = new Pristine(editForm, {
   classTo: 'img-upload__item',
   errorClass: 'img-upload__item--invalid',
@@ -45,7 +59,10 @@ function closeForm() {
   editForm.reset();
   pristine.reset();
   document.getElementById('effect-none').checked = true;
+
   clearEffect();
+
+  imagePreview.style.transform = '';
 }
 
 function initFormOpenClose() {
@@ -71,6 +88,7 @@ function initFormOpenClose() {
 function openForm() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  document.querySelector('.img-upload__preview img').src = URL.createObjectURL(this.files[0]);
 }
 
 function initFormValidation() {
@@ -85,13 +103,54 @@ function initFormValidation() {
     validateComment,
     'Длина комментария не может составлять больше 140 символов'
   );
+}
 
+function showPopupMessage(type) {
+  const message = document.querySelector(`#${type}`).content.querySelector(`.${type}`).cloneNode(true);
+  const messageWrapper = message.querySelector(`.${type}__inner`);
+  const button = messageWrapper.querySelector(`.${type}__button`);
+  button.addEventListener('click', () => {
+    message.remove();
+  });
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      message.remove();
+    }
+  });
+  document.addEventListener('click', (evt) => {
+    const withinBoundaries = evt.composedPath().includes(messageWrapper);
+    if ( ! withinBoundaries ) {
+      message.remove();
+    }
+  });
+  document.body.appendChild(message);
+}
+
+const initFormSubmit = (onSuccess) =>  {
   editForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      editForm.submit();
+      blockSubmitButton();
+
+      sendData(
+        () => {
+          onSuccess();
+
+          unblockSubmitButton();
+
+          showPopupMessage('success');
+        },
+        () => {
+          unblockSubmitButton();
+
+          showPopupMessage('error');
+
+          closeForm();
+        },
+        new FormData(evt.target),
+      );
     }
   });
-}
+};
 
-export { initFormValidation,initFormOpenClose };
+export { initFormValidation,initFormOpenClose, initFormSubmit, closeForm };

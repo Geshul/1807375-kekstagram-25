@@ -1420,3 +1420,22 @@ main {
 .active {
   display: block;
 }
+
+.img-upload__error {
+  display: block;
+  font-size: 0.85em;
+  color: #c00;
+}
+
+.alert__container {
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  bottom: 10;
+  right: 0;
+  padding: 10px 3px;
+  font-size: 30px;
+  text-align: center;
+  background-color: yellow;
+  color: black;
+}
