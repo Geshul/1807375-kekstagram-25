@@ -23,7 +23,7 @@ const ALERT_SHOW_TIME = 5000;
 
 function getRandomId() {
   let element = getRandomInteger(1,1000);
-  while(randomIds.includes(element)){
+  while(randomIds.includes(element)) {
     element = getRandomInteger(1,1000);
   }
   randomIds.push(element);
