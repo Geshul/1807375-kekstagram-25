@@ -30,7 +30,6 @@ function resetBigPicture() {
 
 function fillBigPicture (post) {
   resetBigPicture();
-
   const fullPhoto = screen.querySelector('.big-picture__img img');
   const likesCount = screen.querySelector('.likes-count');
   const commentsCount = screen.querySelector('.comments-count');
@@ -42,9 +41,7 @@ function fillBigPicture (post) {
   postComments = post.comments;
   commentsCount.textContent = post.comments.length;
   commentsList.innerHTML = '';
-
   fillComments();
-
   screen.classList.remove('hidden');
   closeBigPicture.addEventListener('click', () =>{
     screen.classList.add('hidden');
@@ -64,9 +61,7 @@ function createFullscreen(posts) {
   for(let i = 0; i < photo.length; i++){
     photo[i].addEventListener('click', (evt) => {
       const postId = evt.target.closest('.picture').dataset.postId;
-
       fillBigPicture(posts[postId]);
-
       document.body.classList.add('modal-open');
     });
   }
