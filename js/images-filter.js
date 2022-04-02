@@ -19,19 +19,19 @@ function getRandomPosts() {
   return getRandomInteger(-5, 5);
 }
 
-function postSorting(posts, filter){
-  if(filter==='filter-default') {
+function postSorting(posts, filter) {
+  if (filter === 'filter-default') {
     clearMiniatures();
     createMiniatures(posts);
     createFullscreen(posts);
   }
-  if(filter==='filter-random') {
+  if (filter === 'filter-random') {
     const randomedPosts = posts.slice().sort(getRandomPosts).slice(0, 10);
     clearMiniatures();
     createMiniatures(randomedPosts);
     createFullscreen(randomedPosts);
   }
-  if(filter==='filter-discussed') {
+  if (filter === 'filter-discussed') {
     const discussedPosts = posts.slice().sort(getSort);
     clearMiniatures();
     createMiniatures(discussedPosts);
@@ -41,8 +41,8 @@ function postSorting(posts, filter){
 const onSortButtonClick = debounce(postSorting);
 
 function filterImages(posts) {
-  filterSection.classList.remove('img-filters--inactive');
   const filterForm = filterSection.querySelector('.img-filters__form');
+  filterSection.classList.remove('img-filters--inactive');
   filterForm.addEventListener('click', (evt) => {
     filterForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     evt.target.classList.add('img-filters__button--active');
@@ -51,4 +51,3 @@ function filterImages(posts) {
 }
 
 export { filterImages };
-
