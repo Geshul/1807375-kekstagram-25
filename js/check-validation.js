@@ -80,10 +80,22 @@ function initFormOpenClose() {
   });
 }
 
+function uploadPreview(image) {
+  const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+  const preview = document.querySelector('.img-upload__preview img');
+  const file = image.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+}
+
 function openForm() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.querySelector('.img-upload__preview img').src = URL.createObjectURL(this.files[0]);
+  uploadPreview(this);
 }
 
 function initFormValidation() {
@@ -126,7 +138,6 @@ const initFormSubmit = (onSuccess) =>  {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
-
       sendData(
         () => {
           onSuccess();
