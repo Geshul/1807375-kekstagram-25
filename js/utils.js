@@ -1,14 +1,7 @@
 function getRandomInteger(firstNumber, secondNumber) {
   const min = Math.ceil(firstNumber);
   const max = Math.floor(secondNumber);
-
-  if (min < 0) {
-    return false;
-  }
-  if (max > min) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  return false;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function checkStringMaxLength(currentString, maxLength) {
@@ -31,15 +24,20 @@ function getRandomId() {
 }
 
 const showAlert = (message) => {
-  const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert__container').cloneNode(true);
-
+  const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert-container').cloneNode(true);
   alertContainer.textContent = message;
-
   document.body.appendChild(alertContainer);
-
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandomInteger, checkStringMaxLength, getRandomId, showAlert };
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomInteger, checkStringMaxLength, getRandomId, showAlert, debounce };

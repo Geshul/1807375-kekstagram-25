@@ -1427,7 +1427,7 @@ main {
   color: #c00;
 }
 
-.alert__container {
+.alert-container {
   z-index: 100;
   position: absolute;
   left: 0;

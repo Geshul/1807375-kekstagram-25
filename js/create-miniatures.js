@@ -5,7 +5,6 @@ const miniatures = document.createDocumentFragment();
 function createMiniatures(posts) {
   posts.forEach(({ url, likes, comments }, index) => {
     const post = templatePost.cloneNode(true);
-
     post.querySelector('.picture__img').src = url;
     post.querySelector('.picture__likes').textContent = likes;
     post.querySelector('.picture__comments').textContent = comments.length;
