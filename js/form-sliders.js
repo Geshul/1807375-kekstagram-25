@@ -80,7 +80,6 @@ function clearEffect() {
 function initRangeSlider() {
   const sliderElement = document.querySelector('.effect-level__slider');
   const listEffects = document.querySelector('.img-upload__effects');
-
   noUiSlider.create(sliderElement, {
     range: {
       min: 0,
@@ -89,12 +88,10 @@ function initRangeSlider() {
     start: 1,
     step: 0.1
   });
-
   sliderElement.noUiSlider.on('update', () => {
     valueElement.value = sliderElement.noUiSlider.get();
     innerImage.style.filter = `${EFFECT_STYLE[currentEffect]}(${valueElement.value}${EFFECT_SIGN[currentEffect]})`;
   });
-
   listEffects.addEventListener('change', (evt) => {
     currentEffect = evt.target.value;
     innerImage.className = `effects effects__preview--${currentEffect}`;
@@ -110,7 +107,6 @@ function initRangeSlider() {
 function changeControl() {
   uploadScale.querySelector('.scale__control--smaller').addEventListener('click', ()=> {
     let currentValue = parseInt(uploadValue.value, 10);
-
     if (currentValue > 25 && currentValue <= 100) {
       currentValue -= SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
@@ -119,7 +115,6 @@ function changeControl() {
   });
   uploadScale.querySelector('.scale__control--bigger').addEventListener('click', ()=> {
     let currentValue = parseInt(uploadValue.value, 10);
-
     if (currentValue >= 25 && currentValue < 100) {
       currentValue += SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
