@@ -5,6 +5,7 @@ const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
 const submitButton = editForm.querySelector('.img-upload__submit');
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Загрузка...';
@@ -81,12 +82,10 @@ function initFormOpenClose() {
 }
 
 function uploadPreview(image) {
-  const FILE_TYPES = ['jpg', 'jpeg', 'png'];
   const preview = document.querySelector('.img-upload__preview img');
   const file = image.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
   if (matches) {
     preview.src = URL.createObjectURL(file);
   }
