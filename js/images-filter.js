@@ -25,18 +25,19 @@ function postSorting(posts, filter) {
     createMiniatures(posts);
     createFullscreen(posts);
   }
-  if (filter === 'filter-random') {
+  else if (filter === 'filter-random') {
     const randomedPosts = posts.slice().sort(getRandomPosts).slice(0, 10);
     clearMiniatures();
     createMiniatures(randomedPosts);
     createFullscreen(randomedPosts);
   }
-  if (filter === 'filter-discussed') {
+  else if (filter === 'filter-discussed') {
     const discussedPosts = posts.slice().sort(getSort);
     clearMiniatures();
     createMiniatures(discussedPosts);
     createFullscreen(discussedPosts);
-  }}
+  }
+}
 
 const onSortButtonClick = debounce(postSorting);
 

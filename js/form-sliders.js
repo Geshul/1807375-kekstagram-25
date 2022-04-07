@@ -94,7 +94,7 @@ function initRangeSlider() {
   });
   listEffects.addEventListener('change', (evt) => {
     currentEffect = evt.target.value;
-    innerImage.className = `effects effects__preview--${currentEffect}`;
+    innerImage.className = `effects__preview--${currentEffect}`;
     sliderElement.noUiSlider.updateOptions(SLIDER_EFFECT_OPTIONS[currentEffect]);
     if (currentEffect === 'none') {
       clearEffect();
@@ -123,4 +123,4 @@ function changeControl() {
   });
 }
 
-export { changeControl, initRangeSlider, clearEffect, imagePreview };
+export { changeControl, initRangeSlider, clearEffect };

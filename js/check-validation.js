@@ -1,6 +1,7 @@
-import { clearEffect, imagePreview } from './form-sliders.js';
+import { clearEffect } from './form-sliders.js';
 import { sendData } from './api.js';
 
+const imagePreview = document.querySelector('.img-upload__preview');
 const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
@@ -38,7 +39,7 @@ function validateHashtags(value) {
     (!hashTags[i].match(regularExpression) && value !== '')) {
       return false;
     }
-    if (checkedHashTags.includes(hashTags[i])) {
+    else if (checkedHashTags.includes(hashTags[i])) {
       return false;
     } else {
       checkedHashTags.push(hashTags[i]);
