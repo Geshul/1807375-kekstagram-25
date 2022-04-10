@@ -1,5 +1,5 @@
-const randomIds = [];
 const ALERT_SHOW_TIME = 5000;
+
 const showAlert = (message) => {
   const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert-container').cloneNode(true);
   alertContainer.textContent = message;
@@ -22,15 +22,6 @@ function checkStringMaxLength(currentString, maxLength) {
   return true;
 }
 
-function getRandomId() {
-  let element = getRandomInteger(1,1000);
-  while(randomIds.includes(element)) {
-    element = getRandomInteger(1,1000);
-  }
-  randomIds.push(element);
-  return element;
-}
-
 function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
   return (...rest) => {
@@ -39,4 +30,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandomInteger, checkStringMaxLength, getRandomId, showAlert, debounce };
+export { getRandomInteger, checkStringMaxLength, showAlert, debounce };
