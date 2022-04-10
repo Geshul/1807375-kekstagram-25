@@ -1,10 +1,10 @@
 const screen = document.querySelector('.big-picture');
-let postComments = [];
-let lastFilledComment = 0;
 const commentsLoader = document.querySelector('.social__comments-loader');
 const commentsList = screen.querySelector('.social__comments');
+let postComments = [];
+let lastFilledComment = 0;
 
-function fillComments () {
+function fillComments() {
   const commentTemplate = document.querySelector('#social-comment').content;
   const slicedComments = postComments.slice(lastFilledComment,lastFilledComment+5);
   const filledComments = document.querySelector('.comments-filled');
@@ -21,6 +21,10 @@ function fillComments () {
     commentsLoader.classList.add('hidden');
   }
   filledComments.textContent = lastFilledComment;
+}
+
+function onLoadMoreButtonClick() {
+  fillComments();
 }
 
 function resetBigPicture() {
@@ -53,7 +57,7 @@ function fillBigPicture (post) {
       document.body.classList.remove('modal-open');
     }
   });
-  commentsLoader.addEventListener('click', fillComments);
+  commentsLoader.addEventListener('click', onLoadMoreButtonClick);
 }
 
 function createFullscreen(posts) {

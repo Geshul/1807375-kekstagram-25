@@ -1,20 +1,32 @@
 import { clearEffect } from './form-sliders.js';
 import { sendData } from './api.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const HASHTAGS_LIMIT = 5;
+const MIN_HASHTAGS_LENGTH = 1;
+const MAX_HASHTAGS_LENGTH = 20;
+const MAX_COMMENT_LENGTH = 140;
+
 const imagePreview = document.querySelector('.img-upload__preview');
 const upload = document.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('#upload-select-image');
 const submitButton = editForm.querySelector('.img-upload__submit');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const effectNoneRadio = document.getElementById('effect-none');
+const closeFormButton = document.querySelector('.img-upload__cancel');
+const formHashTagsInput = editForm.querySelector('.text__hashtags');
+const formDescriptionInput = editForm.querySelector('.text__description');
+
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Загрузка...';
 };
+
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
+
 const pristine = new Pristine(editForm, {
   classTo: 'img-upload__item',
   errorClass: 'img-upload__item--invalid',
@@ -29,13 +41,13 @@ function validateHashtags(value) {
   hashTags = hashTags.map((element) => element.toLowerCase());
   const checkedHashTags = [];
   const regularExpression = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
-  if (hashTags.length > 5) {
+  if (hashTags.length > HASHTAGS_LIMIT) {
     return false;
   }
   for (let i = 0; i < hashTags.length; i++) {
     if ((!hashTags[i].startsWith('#') && value !== '') ||
-    (hashTags[i].length <= 1 && value !== '') ||
-    hashTags[i].length > 20 ||
+    (hashTags[i].length <= MIN_HASHTAGS_LENGTH && value !== '') ||
+    hashTags[i].length > MAX_HASHTAGS_LENGTH ||
     (!hashTags[i].match(regularExpression) && value !== '')) {
       return false;
     }
@@ -49,7 +61,11 @@ function validateHashtags(value) {
 }
 
 function validateComment(value) {
-  return value.length <= 140;
+  return value.length <= MAX_COMMENT_LENGTH;
+}
+
+function onCloseForm() {
+  closeForm();
 }
 
 function closeForm() {
@@ -57,29 +73,29 @@ function closeForm() {
   document.body.classList.remove('modal-open');
   editForm.reset();
   pristine.reset();
-  document.getElementById('effect-none').checked = true;
+  effectNoneRadio.checked = true;
   clearEffect();
   imagePreview.style.transform = '';
+  closeFormButton.removeEventListener('click', onCloseForm);
+  formHashTagsInput.removeEventListener('keydown', onInputElementEscKeydown);
+  formDescriptionInput.removeEventListener('keydown', onInputElementEscKeydown);
+  document.removeEventListener('keydown', onPopupFormEscKeydown);
+}
+
+function onInputElementEscKeydown(evt) {
+  if (evt.key === 'Escape') {
+    evt.stopPropagation();
+  }
+}
+
+function onPopupFormEscKeydown(evt) {
+  if (evt.key === 'Escape') {
+    closeForm();
+  }
 }
 
 function initFormOpenClose() {
-  upload.addEventListener('change', openForm);
-  document.querySelector('.img-upload__cancel').addEventListener('click', closeForm);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closeForm();
-    }
-  });
-  document.querySelector('.img-upload__text input').addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      evt.stopPropagation();
-    }
-  });
-  document.querySelector('.img-upload__text textarea').addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      evt.stopPropagation();
-    }
-  });
+  upload.addEventListener('change', onOpenForm);
 }
 
 function uploadPreview(image) {
@@ -92,21 +108,25 @@ function uploadPreview(image) {
   }
 }
 
-function openForm() {
+function onOpenForm() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   uploadPreview(this);
+  closeFormButton.addEventListener('click', onCloseForm);
+  formHashTagsInput.addEventListener('keydown', onInputElementEscKeydown);
+  formDescriptionInput.addEventListener('keydown', onInputElementEscKeydown);
+  document.addEventListener('keydown', onPopupFormEscKeydown);
 }
 
 function initFormValidation() {
   pristine.addValidator(
-    editForm.querySelector('.text__hashtags'),
+    formHashTagsInput,
     validateHashtags,
     'Что-то пошло не так'
   );
 
   pristine.addValidator(
-    editForm.querySelector('.text__description'),
+    formDescriptionInput,
     validateComment,
     'Длина комментария не может составлять больше 140 символов'
   );

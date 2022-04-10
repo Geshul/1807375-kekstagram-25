@@ -3,6 +3,8 @@ import { getRandomInteger } from './utils.js';
 import { createFullscreen } from './create-fullscreen.js';
 import { debounce } from './utils.js';
 
+const RANDOM_POSTS_LIMIT = 10;
+
 const filterSection = document.querySelector('.img-filters');
 
 function getSort(a, b) {
@@ -19,23 +21,23 @@ function getRandomPosts() {
   return getRandomInteger(-5, 5);
 }
 
+function fillSortedPosts(posts) {
+  clearMiniatures();
+  createMiniatures(posts);
+  createFullscreen(posts);
+}
+
 function postSorting(posts, filter) {
   if (filter === 'filter-default') {
-    clearMiniatures();
-    createMiniatures(posts);
-    createFullscreen(posts);
+    fillSortedPosts(posts);
   }
   else if (filter === 'filter-random') {
-    const randomedPosts = posts.slice().sort(getRandomPosts).slice(0, 10);
-    clearMiniatures();
-    createMiniatures(randomedPosts);
-    createFullscreen(randomedPosts);
+    const randomedPosts = posts.slice().sort(getRandomPosts).slice(0, RANDOM_POSTS_LIMIT);
+    fillSortedPosts(randomedPosts);
   }
   else if (filter === 'filter-discussed') {
     const discussedPosts = posts.slice().sort(getSort);
-    clearMiniatures();
-    createMiniatures(discussedPosts);
-    createFullscreen(discussedPosts);
+    fillSortedPosts(discussedPosts);
   }
 }
 

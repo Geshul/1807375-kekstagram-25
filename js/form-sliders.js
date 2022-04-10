@@ -1,11 +1,7 @@
-const uploadScale = document.querySelector('.img-upload__scale');
-const uploadValue = uploadScale.querySelector('.scale__control--value');
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+const RADIX_DECUMAL = 10;
 const SCALE_STEP = 25;
-const imagePreview = document.querySelector('.img-upload__preview');
-const innerImage = imagePreview.querySelector('img');
-const sliderWrapper = document.querySelector('.img-upload__effect-level');
-let currentEffect = 'none';
-const valueElement = document.querySelector('.effect-level__value');
 const EFFECT_SIGN = {
   none: '',
   chrome: '',
@@ -71,6 +67,14 @@ const SLIDER_EFFECT_OPTIONS = {
   }
 };
 
+const uploadScale = document.querySelector('.img-upload__scale');
+const uploadValue = uploadScale.querySelector('.scale__control--value');
+const imagePreview = document.querySelector('.img-upload__preview');
+const innerImage = imagePreview.querySelector('img');
+const sliderWrapper = document.querySelector('.img-upload__effect-level');
+const valueElement = document.querySelector('.effect-level__value');
+let currentEffect = 'none';
+
 function clearEffect() {
   sliderWrapper.classList.remove('active');
   innerImage.className = 'effects effects__preview--none';
@@ -106,16 +110,16 @@ function initRangeSlider() {
 
 function changeControl() {
   uploadScale.querySelector('.scale__control--smaller').addEventListener('click', ()=> {
-    let currentValue = parseInt(uploadValue.value, 10);
-    if (currentValue > 25 && currentValue <= 100) {
+    let currentValue = parseInt(uploadValue.value, RADIX_DECUMAL);
+    if (currentValue > MIN_SCALE && currentValue <= MAX_SCALE ) {
       currentValue -= SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
       imagePreview.style.transform = `scale(${currentValue}%)`;
     }
   });
   uploadScale.querySelector('.scale__control--bigger').addEventListener('click', ()=> {
-    let currentValue = parseInt(uploadValue.value, 10);
-    if (currentValue >= 25 && currentValue < 100) {
+    let currentValue = parseInt(uploadValue.value, RADIX_DECUMAL);
+    if (currentValue >= MIN_SCALE  && currentValue < MAX_SCALE) {
       currentValue += SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
       imagePreview.style.transform = `scale(${currentValue}%)`;
