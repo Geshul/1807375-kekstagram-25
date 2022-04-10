@@ -1,6 +1,6 @@
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
-const RADIX_DECUMAL = 10;
+const RADIX_DECIMAL = 10;
 const SCALE_STEP = 25;
 const EFFECT_SIGN = {
   none: '',
@@ -110,7 +110,7 @@ function initRangeSlider() {
 
 function changeControl() {
   uploadScale.querySelector('.scale__control--smaller').addEventListener('click', ()=> {
-    let currentValue = parseInt(uploadValue.value, RADIX_DECUMAL);
+    let currentValue = parseInt(uploadValue.value, RADIX_DECIMAL);
     if (currentValue > MIN_SCALE && currentValue <= MAX_SCALE ) {
       currentValue -= SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
@@ -118,7 +118,7 @@ function changeControl() {
     }
   });
   uploadScale.querySelector('.scale__control--bigger').addEventListener('click', ()=> {
-    let currentValue = parseInt(uploadValue.value, RADIX_DECUMAL);
+    let currentValue = parseInt(uploadValue.value, RADIX_DECIMAL);
     if (currentValue >= MIN_SCALE  && currentValue < MAX_SCALE) {
       currentValue += SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
